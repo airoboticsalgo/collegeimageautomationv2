@@ -3,13 +3,14 @@ from flask import request
 from lib.face.service import fileoperation
 from lib.face.service import faceoperation
 import os
-app = Flask(__name__)
+from . import blueprint
+# app = Flask(__name__)
 from lib.logservice import logger as log
 
 logger = log.get_singletonish_logger()
 # db="E:/python_workspace/face_deepface1/dataset551"   
 dataset="collegefacedatabase"
-@app.route("/faceapi/record/validation", methods=['PUT'])
+@blueprint.route("/faceapi/record/validation", methods=['PUT'])
 def record_validation():
      logger.info("/faceapi/record/validation================================================================ start") 
      devicename = request.args.get('devicename')
@@ -49,7 +50,7 @@ def record_validation():
      logger.info("/faceapi/record/validation================================================================ end") 
 
      return reponse
-@app.route("/faceapi/record/create", methods=['POST'])
+@blueprint.route("/faceapi/record/create", methods=['POST'])
 def record_create():
     logger.info("/faceapi/record/create================================================================ start") 
     logger.info(f"api={request.url}")
@@ -84,7 +85,7 @@ def record_create():
     logger.info(f"reponse==={reponse}") 
     logger.info("/faceapi/record/create================================================================ end") 
     return reponse
-@app.route("/faceapi/record/delete", methods=['DELETE'])
+@blueprint.route("/faceapi/record/delete", methods=['DELETE'])
 def record_delete():
     logger.info("/faceapi/record/delete================================================================ start")
     logger.info(f"api={request.url}") 

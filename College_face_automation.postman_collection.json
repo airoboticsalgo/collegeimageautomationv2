@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "4b2ed312-8117-4243-8716-8c241c09ad96",
+		"name": "College_face_automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13439377"
+	},
+	"item": [
+		{
+			"name": "record/validation",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/E:/python_workspace/college_face_automation1/college_face_automation/dataset/test/bala/bala1.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:7055/faceapi/record/validation?devicename=common",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7055",
+					"path": [
+						"faceapi",
+						"record",
+						"validation"
+					],
+					"query": [
+						{
+							"key": "devicename",
+							"value": "common"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "record/validation public",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/E:/python_workspace/college_face_automation1/college_face_automation/dataset/test/1 (1)/1 (1).jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://52.172.93.237:7055/faceapi/record/validation?devicename=common",
+					"protocol": "http",
+					"host": [
+						"52",
+						"172",
+						"93",
+						"237"
+					],
+					"port": "7055",
+					"path": [
+						"faceapi",
+						"record",
+						"validation"
+					],
+					"query": [
+						{
+							"key": "devicename",
+							"value": "common"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "record/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/E:/python_workspace/college_face_automation1/college_face_automation/temp/dravid.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/faceapi/record/create?devicename=common&&recordname=dravid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"faceapi",
+						"record",
+						"create"
+					],
+					"query": [
+						{
+							"key": "devicename",
+							"value": "common"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "recordname",
+							"value": "dravid"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "record/create public",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/E:/python_workspace/college_face_automation1/college_face_automation/temp/dravid.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://52.172.93.237:7055/faceapi/record/create?devicename=common&&recordname=bala",
+					"protocol": "http",
+					"host": [
+						"52",
+						"172",
+						"93",
+						"237"
+					],
+					"port": "7055",
+					"path": [
+						"faceapi",
+						"record",
+						"create"
+					],
+					"query": [
+						{
+							"key": "devicename",
+							"value": "common"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "recordname",
+							"value": "bala"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "record/delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7055/faceapi/record/delete?devicename=common&&recordname=bala11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7055",
+					"path": [
+						"faceapi",
+						"record",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "devicename",
+							"value": "common"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "recordname",
+							"value": "bala11"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "record/delete public",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7055/faceapi/record/delete?devicename=common&&recordname=bala11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7055",
+					"path": [
+						"faceapi",
+						"record",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "devicename",
+							"value": "common"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "recordname",
+							"value": "bala11"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
