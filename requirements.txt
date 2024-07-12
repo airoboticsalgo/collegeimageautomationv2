@@ -1,0 +1,16 @@
+# DO NOT include azure-functions-worker in this file
+# The Python Worker is managed by Azure Functions platform
+# Manually managing azure-functions-worker may cause unexpected issues
+pip
+pyinstaller
+flask==3.0.3
+waitress==3.0.0
+tensorflow==2.16.2
+pandas==2.2.2
+gdown==5.2.0
+opencv-python==4.10.0.84
+pillow==10.4.0
+mtcnn==0.1.1
+retina-face==0.0.17
+tf-keras==2.16.0
+cloud-tpu-client==0.10
