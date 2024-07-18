@@ -8,7 +8,7 @@ import time
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-
+from lib.util import util 
 # project dependencies
 from lib.face.core.commons import image_utils
 from lib.face.core.modules import representation, detection, verification
@@ -31,6 +31,7 @@ def find(
     silent: bool = False,
     refresh_database: bool = True,
     anti_spoofing: bool = False,
+    source_objs=[],
 ) -> List[pd.DataFrame]:
     """
     Identify individuals in a database
@@ -129,16 +130,16 @@ def find(
         "target_w",
         "target_h",
     ]
-
+    util.printcurrenttime("1.x1 pickleload")
     # Ensure the proper pickle file exists
     if not os.path.exists(datastore_path):
         with open(datastore_path, "wb") as f:
             pickle.dump([], f)
-
+    
     # Load the representations from the pickle file
     with open(datastore_path, "rb") as f:
         representations = pickle.load(f)
-
+    util.printcurrenttime("1.x1 representations0")
     # check each item of representations list has required keys
     for i, current_representation in enumerate(representations):
         missing_keys = list(set(df_cols) - set(current_representation.keys()))
@@ -147,13 +148,19 @@ def find(
                 f"{i}-th item does not have some required keys - {missing_keys}."
                 f"Consider to delete {datastore_path}"
             )
-
+    util.printcurrenttime("1.x1 list_images")
     # embedded images
     pickled_images = [representation["identity"] for representation in representations]
-
+    
+    util.printcurrenttime("1.x1 pickled_images")
+    # print("ll0=",ll)
     # Get the list of images on storage
-    storage_images = image_utils.list_images(path=db_path)
-
+    storage_images=[]
+    if refresh_database is True:
+        storage_images = image_utils.list_images(path=db_path)
+    ll=len(storage_images)
+    print("ll1=",ll)
+    util.printcurrenttime("1.x1 storage_images")
     if len(storage_images) == 0 and refresh_database is True:
         raise ValueError(f"No item found in {db_path}")
     if len(representations) == 0 and refresh_database is False:
@@ -163,7 +170,7 @@ def find(
     new_images = []
     old_images = []
     replaced_images = []
-
+    util.printcurrenttime("1.x1 refresh_database")
     if not refresh_database:
         logger.info(
             f"Could be some changes in {db_path} not tracked."
@@ -230,25 +237,29 @@ def find(
         return []
 
     # ----------------------------
+    util.printcurrenttime("1.x1 DataFrames")
     # now, we got representations for facial database
     df = pd.DataFrame(representations)
-
+    util.printcurrenttime("1.x1 DataFramed")
     if silent is False:
         logger.info(f"Searching {img_path} in {df.shape[0]} length datastore")
 
+    util.printcurrenttime("1.x1represent1")
+    # print("source_objs11=",source_objs)
     # img path might have more than once face
-    source_objs = detection.extract_faces(
-        img_path=img_path,
-        detector_backend=detector_backend,
-        grayscale=False,
-        enforce_detection=enforce_detection,
-        align=align,
-        expand_percentage=expand_percentage,
-        anti_spoofing=anti_spoofing,
-    )
+    if len(source_objs)==0 :
+        source_objs = detection.extract_faces(
+            img_path=img_path,
+            detector_backend=detector_backend,
+            grayscale=False,
+            enforce_detection=enforce_detection,
+            align=align,
+            expand_percentage=expand_percentage,
+            anti_spoofing=anti_spoofing,
+        )
 
     resp_obj = []
-
+    util.printcurrenttime("1.x1represent2")
     for source_obj in source_objs:
         if anti_spoofing is True and source_obj.get("is_real", True) is False:
             raise ValueError("Spoof detected in the given image.")
@@ -262,7 +273,7 @@ def find(
             align=align,
             normalization=normalization,
         )
-
+        util.printcurrenttime("1.x1represent22")
         target_representation = target_embedding_obj[0]["embedding"]
 
         result_df = df.copy()  # df will be filtered in each img
@@ -272,6 +283,7 @@ def find(
         result_df["source_h"] = source_region["h"]
 
         distances = []
+        util.printcurrenttime("1.x1") 
         for _, instance in df.iterrows():
             source_representation = instance["embedding"]
             if source_representation is None:
@@ -294,6 +306,7 @@ def find(
             distances.append(distance)
 
             # ---------------------------
+        util.printcurrenttime("1.x2")    
         target_threshold = threshold or verification.find_threshold(model_name, distance_metric)
 
         result_df["threshold"] = target_threshold

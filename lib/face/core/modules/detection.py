@@ -69,7 +69,7 @@ def extract_faces(
         - "antispoof_score" (float): score of antispoofing analyze result. this key is
             just available in the result only if anti_spoofing is set to True in input arguments.
     """
-
+    # print("detector_backend name==",detector_backend)
     resp_objs = []
 
     # img might be path, base64 or numpy array. Convert it to numpy whatever it is.

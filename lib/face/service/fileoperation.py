@@ -72,8 +72,14 @@ def dosavetemp(request):
         basefilename=f"{basefilename}_{rad}.jpg"
         fullpath=os.path.join(temp, basefilename)
         file.save(fullpath)
+        
+       
+
+
         current_directory = os.getcwd()
         final_path = os.path.join(current_directory, fullpath)
+       
+     
         return status,final_path,filename
      return "failed","",""
 
@@ -94,12 +100,30 @@ def dosave(request):
         filename = secure_filename(file.filename)
         basefilename = Path(filename).stem
         # print("basefilename==",basefilename)
-        rad=str(random.randint(10000,99999))
+        rad=str(random.randint(100000,999999))
         basefilename=f"{basefilename}_{rad}.jpg"
         fullpath=os.path.join(temp, basefilename)
         file.save(fullpath)
         current_directory = os.getcwd()
         final_path = os.path.join(current_directory, fullpath)
+
+
+        print("ffinalpath====",final_path)
+
+        import matplotlib.pyplot as plt
+        
+        import cv2
+        image = cv2.imread(final_path)
+        re_image = cv2.resize(image, (0, 0), fx = 0.7, fy = 0.7)
+        refilename=f"re_{basefilename}_{rad}.jpg"
+        
+        refullpath=os.path.join(temp, refilename)
+        print("refullpath====",refullpath)
+        cv2.imwrite(f"{final_path}", re_image)
+        # cv2.imwrite(f"{refullpath}", re_image)
+        # plt.imshow(re_image)
+        # plt.show()
+        # plt.title(Titles[i])
         return status,final_path
      return "failed",""
 
@@ -126,7 +150,7 @@ def getfilenamebypath(finder):
     print("emptydata=",data.empty)
     if data.empty:
         return status,error1
-    # print("to_json=",data.to_json())
+    # logger.info(f"finder data to_json={data.to_json}")
     # print("data.columns[1]",data.columns[1][1][0])
     # print("data.columns[0]",data.columns[0][0][0])
     # j=data.index(0)
@@ -144,9 +168,12 @@ def getfilenamebypath(finder):
     logger.info(f"fullpath={fullpath}")
     basefilename = Path(fullpath).stem
 
-    print("recordname=",basefilename)
-    logger.info(f"recordname={basefilename}")
-
+    print("recordname basefilename=",basefilename)
+    logger.info(f"recordname basefilename={basefilename}")
+    parentdirnamepath=os.path.dirname(fullpath)
+    parentdirname = Path(parentdirnamepath).stem
+    print("recordname parentdirname=",parentdirname)
+    logger.info(f"recordname parentdirname ={parentdirname}")
     # print("finder value11 =",str(finder[0]).strip())
     # finalname=str(finder[0])
     # print("finder value =",finalname)
@@ -179,5 +206,6 @@ def getfilenamebypath(finder):
    
     # basefilename = Path(array2[0]).stem
     # print("basefilename=",basefilename)
-    return status,basefilename
+
+    return status,basefilename,parentdirname
 createdir(temp)

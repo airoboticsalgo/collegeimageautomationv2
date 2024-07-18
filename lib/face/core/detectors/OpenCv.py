@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 from lib.face.core.models.Detector import Detector, FacialAreaRegion
 from lib.logservice import logger as log
-
+from lib.util import util 
 
 logger = log.get_singletonish_logger()
 
@@ -152,8 +152,11 @@ class OpenCvClient(Detector):
                     face_detector_path,
                     " violated.",
                 )
+            print("face_detector_path1=",face_detector_path)
+            # util.printcurrenttime("1.011")
             detector = cv2.CascadeClassifier(face_detector_path)
-
+            # util.printcurrenttime("1.012")
+            # print("face_detector_path2=",face_detector_path)
         elif model_name == "haarcascade_eye":
             eye_detector_path = opencv_path + "haarcascade_eye.xml"
             if os.path.isfile(eye_detector_path) != True:

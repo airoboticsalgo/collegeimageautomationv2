@@ -270,6 +270,7 @@ def find(
     silent: bool = False,
     refresh_database: bool = True,
     anti_spoofing: bool = False,
+    source_objs=[],
 ) -> List[pd.DataFrame]:
     """
     Identify individuals in a database
@@ -347,6 +348,7 @@ def find(
         silent=silent,
         refresh_database=refresh_database,
         anti_spoofing=anti_spoofing,
+        source_objs=source_objs
     )
 
 

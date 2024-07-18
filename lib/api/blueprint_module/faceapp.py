@@ -4,6 +4,7 @@ from lib.face.service import fileoperation
 from lib.face.service import faceoperation
 import os
 from . import blueprint
+from lib.util import util 
 # app = Flask(__name__)
 from lib.logservice import logger as log
 
@@ -12,6 +13,7 @@ logger = log.get_singletonish_logger()
 dataset="collegefacedatabase"
 @blueprint.route("/faceapi/record/validation", methods=['PUT'])
 def record_validation():
+     util.printcurrenttime("0")
      logger.info("/faceapi/record/validation================================================================ start") 
      devicename = request.args.get('devicename')
      
@@ -36,14 +38,17 @@ def record_validation():
         status,filename=fileoperation.dosave(request)
     
         print(f"{filename}==temp file save status:",status)
-
-        status, id=faceoperation.finderoneface(devicename,filename)
-        print("id=",id)
+        util.printcurrenttime("1")
+        status, name,recordname=faceoperation.finderoneface(devicename,filename)
+        util.printcurrenttime("2")
+        print("id=",name)
+        print("recordname=",recordname)
         print("status=",status)
         fileoperation.removefile(filename)
       #   if os.path.exists(filename): os.remove(filename)
      reponse = {
-            "id": id,
+            "id": name,
+            "recordname":recordname,
              "status": status
                 }
      logger.info(f"response==={reponse}") 
